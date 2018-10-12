@@ -12,9 +12,9 @@
                 <p>What: {{ events.what }}</p>
             </div>
             <div class="card-action">
-                <a href="{% url 'events_update' events.id %}">Edit</a>
-                <a href="{% url 'events_delete' events.id %}">Delete</a>
+                <a href="{% url 'events_update' event.id %}">Edit</a>
+                <a href="{% url 'events_delete' event.id %}">Delete</a>
             </div>
         </div>
-
-{% endblock %}
+        
+        {% endblock %}

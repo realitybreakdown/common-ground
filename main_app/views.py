@@ -23,6 +23,12 @@ class EventUpdate(UpdateView):
   model = Event
   fields = ['who', 'what', 'where', 'date']
 
+  def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.save()
+        return HttpResponseRedirect('/events/' + str(self.object.pk))
+
+
 class EventDelete(DeleteView):
   model = Event
   success_url = '/events'

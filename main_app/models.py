@@ -14,7 +14,7 @@ class Event(models.Model):
     date = models.DateField('Event date')
 
     def __str__(self):
-        return self.who
+        return self.what
 
     # def get_absolute_url(self):
     #     return reverse('events_detail', kwargs={'events_id': self.id})
