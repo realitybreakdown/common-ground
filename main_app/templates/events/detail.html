@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>Event Details</h1>
+
+<div class="row">
+    <div class="col s6">
+        <div class="card">
+            <div class="card-content">
+                <span class="card-title">{{ events.what }}</span>
+                <p>Where:: {{ events.where }}</p>
+                <p>What: {{ events.what }}</p>
+            </div>
+            <div class="card-action">
+                <a href="{% url 'events_update' events.id %}">Edit</a>
+                <a href="{% url 'events_delete' events.id %}">Delete</a>
+            </div>
+        </div>
+
+{% endblock %}

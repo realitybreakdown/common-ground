@@ -1,0 +1,41 @@
+h1 {
+    text-align: center;
+}
+
+footer{
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: black;
+    color: red;
+    text-align: center;
+}
+
+.page-footer {
+    color: red;
+    background-color: black;
+}
+
+nav {
+    background-color: black;
+}
+
+.unite{
+    text-align: center;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+}
+
+.right {
+    position: relative;
+
+}
+
+.btn {
+    background-color: black;
+}
