@@ -39,3 +39,7 @@ main {
 .btn {
     background-color: black;
 }
+
+.card{
+    width: 100%;
+}

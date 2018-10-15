@@ -4,7 +4,6 @@ from datetime import date
 from django.contrib.auth.models import User
 from django import forms
 
-
 # Create your models here.
 
 class Event(models.Model):
@@ -16,8 +15,8 @@ class Event(models.Model):
     def __str__(self):
         return self.what
 
-    # def get_absolute_url(self):
-    #     return reverse('events_detail', kwargs={'events_id': self.id})
+    def get_absolute_url(self):
+        return reverse('events_detail', kwargs={'event_id': self.id})
 
     class Meta:
         ordering = ['-date']
@@ -29,3 +28,11 @@ class EventForm(forms.ModelForm):
         widgets = {
             'date': forms.DateInput(format='%Y-%m-%d', attrs={'type': 'date'}),
         }
+
+class Comment(models.Model):
+    content = models.TextField('Comment',max_length=600)
+    # user = models.ForeignKey(User, on_delete=models.CASCADE)
+    event = models.ForeignKey(Event, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"Comment: {self.content}"
