@@ -11,6 +11,7 @@ class Event(models.Model):
     what = models.TextField(max_length=600)
     where = models.CharField(max_length=250)
     date = models.DateField('Event date')
+    volunteers = models.ManyToManyField(User)
 
     def __str__(self):
         return self.what
@@ -24,14 +25,14 @@ class Event(models.Model):
 class EventForm(forms.ModelForm):
     class Meta:
         model = Event
-        fields = '__all__'
+        fields = ['who', 'what', 'where', 'date']
         widgets = {
-            'date': forms.DateInput(format='%Y-%m-%d', attrs={'type': 'date'}),
+            'date': forms.DateInput(format='%Y-%m-%d', attrs={'type': 'date', 'min': f"{date.today()}"}),
         }
 
 class Comment(models.Model):
     content = models.TextField('Comment',max_length=600)
-    # user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
 
     def __str__(self):

@@ -10,24 +10,44 @@
                 <p>Where: {{ event.where }}</p>
                 <p>What: {{ event.what }}</p>
                 <p>Date: {{event.date}}</p>
+                <p>Volunteers: {{ event.volunteers.count }}</p>
             </div>
             <div class="card-action">
-                <a href="{% url 'events_update' event.id %}">Edit</a>
-                <a href="{% url 'events_delete' event.id %}">Delete</a>
+                    <a href="{% url 'events_update' event.id %}">Edit</a>
+                    <a href="{% url 'events_delete' event.id %}">Delete</a>
+            {% if is_attending %} 
+                     
+                 <i class="icon-ok-sign">All Set</i> 
+                    
+            {% else %}
+                <form class="left" method="POST" action="/events/{{ event.id }}/volunteer/"> 
+                    {% csrf_token %}
+                    <button class="volbtn">Volunteer</button>
+                </form>
+            {% endif %}
             </div>
         </div>
         <div>
             {% for comment in event.comment_set.all %}
                 <p>{{comment.content}}</p> 
-                <p>{{ comment.user }}</p>
-                <a href="{% url 'comments_update' comment.id %}">Edit</a>
-                <a href="{% url 'comments_delete' comment.id %}">Delete</a>
+                <p class="username">{{ comment.user }}</p>
+            {% if current_user == comment.user %}
+                <div>
+                    <a href="{% url 'comments_update' comment.id %}">Edit</a>
+                    <a href="{% url 'comments_delete' comment.id %}">Delete</a>
+                </div>
+            {% endif %}
             {% endfor %}
             <form action="{% url 'add_comment' event.id %}" method="POST">
             {% csrf_token %}
             {{ comment_form.as_p }}
             <input type="submit" class="btn" value="Add Comment">
             </form>
+        </div>
+        <div>
+            <!-- {% for vol in event.volunteers.all %}
+            <p>{{vol.username}}</p>
+            {% endfor %} -->
         </div>
 </div>
 

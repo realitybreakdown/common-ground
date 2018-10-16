@@ -43,3 +43,29 @@ main {
 .card{
     width: 100%;
 }
+
+.homepage {
+    flex-direction: row;
+    text-align: center;
+}
+
+.username {
+    color: rgba(51, 160, 255, 0.5);
+}
+
+.volbtn {
+    position: absolute;
+    left: 150px;
+    background-color: black;
+    color: white;
+    cursor: pointer;
+    transition: background-color .2s ease-out;
+    transition-property: background-color;
+    transition-duration: 0.2s;
+    transition-timing-function: ease-out;
+    transition-delay: 0s;
+}
+
+.container {
+    margin-bottom: 3rem;
+}

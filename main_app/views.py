@@ -7,15 +7,20 @@ from django.contrib.auth.forms import UserCreationForm
 from django import forms
 from django.forms import DateInput
 from .forms import LoginForm, CommentForm
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
+
+
 
 # Create your views here.
-
+@method_decorator(login_required, name='dispatch')
 class EventCreate(CreateView):
     model = Event
     success_url = '/events/'
     # widgets = {'date': DateInput(format='%Y-%m-%d', attrs={'type': 'date'})}
     form_class = EventForm
 
+@method_decorator(login_required, name='dispatch')
 class EventUpdate(UpdateView):
   model = Event
   fields = ['who', 'what', 'where', 'date']
@@ -25,10 +30,12 @@ class EventUpdate(UpdateView):
         self.object.save()
         return HttpResponseRedirect('/events/' + str(self.object.pk))
 
+@method_decorator(login_required, name='dispatch')
 class EventDelete(DeleteView):
   model = Event
   success_url = '/events'
 
+@method_decorator(login_required, name='dispatch')
 class CommentUpdate(UpdateView):
     model = Comment
     fields = ['content']
@@ -38,6 +45,7 @@ class CommentUpdate(UpdateView):
         self.object.save()
         return redirect(f"/events/{self.object.event_id}")
 
+@method_decorator(login_required, name='dispatch')
 class CommentDelete(DeleteView):
     model = Comment
     def post(self, request, *args, **kwargs):
@@ -58,23 +66,25 @@ def events_index(request):
 
 def events_detail(request, event_id):
     event = Event.objects.get(id=event_id)
+    is_attending = event.volunteers.filter(id=request.user.id).exists()
     comment_form = CommentForm()
     return render(request, 'events/detail.html', {
-        'event': event, 'comment_form': comment_form
+        'event': event, 'comment_form': comment_form, 'is_attending': is_attending,
+        'current_user': request.user
     })
 
+@login_required
 def add_comment(request, event_id):
-    #make username post 
     form = CommentForm(request.POST)
     if form.is_valid():
         new_comment = form.save(commit=False)
+        new_comment.user = request.user
         new_comment.event_id = event_id
         new_comment.save()
     return redirect('events_detail', event_id=event_id)
 
 def login_view(request):
     if request.method == 'POST':
-        # if post, then authenticate (user submitted username and password)
         form = LoginForm(request.POST)
         if form.is_valid():
             u = form.cleaned_data['username']
@@ -108,4 +118,12 @@ def signup_view(request):
    else:
        form = UserCreationForm()
        return render(request, 'signup.html', {'form': form})
+
+@login_required
+def add_volunteer(request, event_id):
+    event = Event.objects.get(id=event_id)
+    event.volunteers.add(request.user)
+    return redirect(f"/events/{event_id}")
+
+
 
