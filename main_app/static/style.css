@@ -69,3 +69,7 @@ main {
 .container {
     margin-bottom: 3rem;
 }
+
+.abouttext{
+    text-align: center;
+}

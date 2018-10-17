@@ -13,11 +13,15 @@ class Event(models.Model):
     date = models.DateField('Event date')
     volunteers = models.ManyToManyField(User)
 
+
     def __str__(self):
         return self.what
 
+    # def get_absolute_url(self):
+    #     return reverse('events_detail', kwargs={'event_id': self.id})
+
     def get_absolute_url(self):
-        return reverse('events_detail', kwargs={'event_id': self.id})
+       return reverse('profile', kwargs={'id': 1})
 
     class Meta:
         ordering = ['-date']
@@ -37,3 +41,4 @@ class Comment(models.Model):
 
     def __str__(self):
         return f"Comment: {self.content}"
+

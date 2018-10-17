@@ -9,6 +9,8 @@ from django.forms import DateInput
 from .forms import LoginForm, CommentForm
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+
 
 
 
@@ -70,8 +72,11 @@ def events_detail(request, event_id):
     comment_form = CommentForm()
     return render(request, 'events/detail.html', {
         'event': event, 'comment_form': comment_form, 'is_attending': is_attending,
-        'current_user': request.user
     })
+    
+def profile(request, id):
+    profile = User.objects.get(id=id)
+    return render(request, 'profile.html', {'profile': profile})
 
 @login_required
 def add_comment(request, event_id):
@@ -124,6 +129,4 @@ def add_volunteer(request, event_id):
     event = Event.objects.get(id=event_id)
     event.volunteers.add(request.user)
     return redirect(f"/events/{event_id}")
-
-
 

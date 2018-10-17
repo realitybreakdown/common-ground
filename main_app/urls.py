@@ -16,6 +16,6 @@ urlpatterns = [
     path('logout/', views.logout_view, name="logout"),
     path('comments/<int:pk>/update/', views.CommentUpdate.as_view(), name='comments_update'),
     path('comments/<int:pk>/delete/', views.CommentDelete.as_view(), name='comments_delete'),
-    
+    path('profile/<int:id>/', views.profile, name='profile'),
 ]
 

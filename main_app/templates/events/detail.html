@@ -31,12 +31,13 @@
             {% for comment in event.comment_set.all %}
                 <p>{{comment.content}}</p> 
                 <p class="username">{{ comment.user }}</p>
-            {% if current_user == comment.user %}
+            {% if user == comment.user %}
                 <div>
                     <a href="{% url 'comments_update' comment.id %}">Edit</a>
                     <a href="{% url 'comments_delete' comment.id %}">Delete</a>
                 </div>
             {% endif %}
+            <hr>
             {% endfor %}
             <form action="{% url 'add_comment' event.id %}" method="POST">
             {% csrf_token %}
