@@ -1,1 +1,1 @@
-web: gunicorn common_ground.wsgi --log-file
+web: gunicorn common_ground.wsgi --log-file -
