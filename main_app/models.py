@@ -11,14 +11,12 @@ class Event(models.Model):
     what = models.TextField(max_length=600)
     where = models.CharField(max_length=250)
     date = models.DateField('Event date')
-    volunteers = models.ManyToManyField(User)
+    volunteers = models.ManyToManyField(User,related_name='volunteers')
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
 
     def __str__(self):
         return self.what
-
-    # def get_absolute_url(self):
-    #     return reverse('events_detail', kwargs={'event_id': self.id})
 
     def get_absolute_url(self):
        return reverse('profile', kwargs={'id': 1})

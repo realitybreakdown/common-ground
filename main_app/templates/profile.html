@@ -1,33 +1,32 @@
 {% extends 'base.html' %}
 {% block content %}
 
-    {% ifnotequal profile user %}
-        <h1 id="profile-name">{{ profile.username }}'s Profile</h1>
-    {% endifnotequal %}
-    {% ifequal profile user %}
-        <h1 id="profile-name">My profile</h1>
-    {% endifequal %}
+    <div>
+        {% ifnotequal profile user %}
+            <h1 id="profile-name">{{ profile.username }}'s Profile</h1>
+        {% endifnotequal %}
+        {% ifequal profile user %}
+            <h1 id="profile-name">My profile</h1>
+        {% endifequal %}
     </div>
 
-<div class="event-container">
-    {% for event in user.event_set.all %}
-        <a href="{% url 'events_detail' event.id %}">
-            <p>{{ event.what }}</p>
-            <hr>
-        </a>
-    {% empty %}
-        <p>Create an event - Click the link above.</p>
-        
-    {% endfor %}
+    <div class="event-container">
+        {% for event in profile.event_set.all %}
+            <a href="{% url 'events_detail' event.id %}">
+                <p>{{ event.what }}</p>
+                <hr>
+            </a>
+        {% empty %}
+            <p>Create an event - Click the link above.</p>
+            
+        {% endfor %}
 
 
-    {% for comment in user.comment_set.all %}
-        <p>{{comment.content}}</p> 
-        <p class="username">{{ comment.event }}</p>
-    {% endfor %}
-
-
-
+        {% for comment in profile.comment_set.all %}
+            <p>{{comment.content}}</p> 
+            <p class="username">{{ comment.event }}</p>
+        {% endfor %}
+    </div>
 
 {% endblock %}
 

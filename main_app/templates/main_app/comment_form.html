@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
-
 {% block content %}
+
     <form action="" method="post">
         {% csrf_token %}
         <table>
@@ -8,4 +8,5 @@
         </table>
         <input type="submit" value="Submit!">
     </form>
+
 {% endblock %}

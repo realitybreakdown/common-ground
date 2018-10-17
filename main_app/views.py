@@ -19,8 +19,14 @@ from django.contrib.auth.models import User
 class EventCreate(CreateView):
     model = Event
     success_url = '/events/'
-    # widgets = {'date': DateInput(format='%Y-%m-%d', attrs={'type': 'date'})}
     form_class = EventForm
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.user = self.request.user
+        self.object.save()
+        return redirect('/events')
+
 
 @method_decorator(login_required, name='dispatch')
 class EventUpdate(UpdateView):
@@ -73,7 +79,7 @@ def events_detail(request, event_id):
     return render(request, 'events/detail.html', {
         'event': event, 'comment_form': comment_form, 'is_attending': is_attending,
     })
-    
+
 def profile(request, id):
     profile = User.objects.get(id=id)
     return render(request, 'profile.html', {'profile': profile})
