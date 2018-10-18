@@ -15,7 +15,8 @@ Common Ground was made for small groups, looking for ways to connect. It was mad
 * HTML5
 
 ## The Site 
-https://dashboard.heroku.com/apps/cmmngrnd
+https://cmmngrnd.herokuapp.com/
+
 ## Next Steps 
 I'd like to add more styling. I'd like to make the profiles more appealing and add more features. 
 
